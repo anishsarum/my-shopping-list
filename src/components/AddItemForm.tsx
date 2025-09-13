@@ -18,34 +18,35 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ onAddItem }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "0.3em",
-      }}
-    >
-      <div style={{ display: "flex", gap: "0.5em", marginRight: "1em" }}>
+    <form onSubmit={handleSubmit} className="flex items-center gap-2 mb-4">
+      <span>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Item name"
           required
-          style={{ width: "5em" }}
+          className="flex-grow h-10"
         />
+      </span>
+      <span>
         <input
           type="number"
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
           min="1"
           required
-          style={{ width: "2em" }}
+          className="w-16 h-10"
         />
-      </div>
-      <button type="submit">Add Item</button>
+      </span>
+      <span className="ml-auto pr-6">
+        <button
+          className="px-4 py-2 h-10 bg-blue-500 text-white rounded"
+          type="submit"
+        >
+          Add Item
+        </button>
+      </span>
     </form>
   );
 };

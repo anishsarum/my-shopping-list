@@ -27,6 +27,10 @@ const ShoppingList: React.FC = () => {
     );
   };
 
+  const handleDelete = (id: number) => {
+    setItems((items) => items.filter((item) => item.id !== id));
+  }
+
   const handleAddItem = (name: string, quantity: number) => {
     setItems((items) => [
       ...items,
@@ -41,8 +45,13 @@ const ShoppingList: React.FC = () => {
 
   return (
     <div>
+      <div className="flex justify-between items-center font-bold border-b pb-2 mb-2">
+        <span className="flex-grow text-left">Item</span>
+        <span className="w-20 text-center">Completed</span>
+        <span className="w-20 text-center">Delete</span>
+      </div>
       {items.map((item) => (
-        <ListItem key={item.id} item={item} onToggle={handleToggle} />
+        <ListItem key={item.id} item={item} onToggle={handleToggle} onDelete={handleDelete} />
       ))}
       <AddItemForm onAddItem={handleAddItem} />
     </div>
