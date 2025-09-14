@@ -26,7 +26,7 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ onAddItem }) => {
           onChange={(e) => setName(e.target.value)}
           placeholder="Item name"
           required
-          className="flex-grow h-10"
+          className="flex-grow h-10 border border-gray-300 rounded px-3"
         />
       </span>
       <span>
@@ -36,10 +36,10 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ onAddItem }) => {
           onChange={(e) => setQuantity(Number(e.target.value))}
           min="1"
           required
-          className="w-16 h-10"
+          className="w-16 h-10 border border-gray-300 rounded px-3"
         />
       </span>
-      <span className="ml-auto pr-6">
+      <span className="ml-auto">
         <button
           className="px-4 py-2 h-10 bg-blue-500 text-white rounded"
           type="submit"

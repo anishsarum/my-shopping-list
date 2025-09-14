@@ -13,9 +13,9 @@ interface ListItemProps {
 const ListItem: React.FC<ListItemProps> = ({ item, onToggle, onDelete }) => (
   <div className="flex justify-between items-center py-1">
     <span className="flex-grow text-left">
-      {item.name} (x{item.quantity})
+      {item.name} (×{item.quantity})
     </span>
-    <span className="w-20 flex justify-center">
+    <span className="w-25 flex justify-center">
       <input
         type="checkbox"
         checked={item.completed}

@@ -1,0 +1,12 @@
+services:
+  frontend:
+    container_name: my-shopping-list-frontend
+    build: ./frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - HOST=0.0.0.0

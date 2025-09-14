@@ -10,14 +10,14 @@ interface Item {
 }
 
 const ShoppingList: React.FC = () => {
-  // const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
 
-  const [items, setItems] = useState<Item[]>([
-    { id: 1, name: "Apples", quantity: 3, completed: false },
-    { id: 2, name: "Bread", quantity: 2, completed: false },
-    { id: 3, name: "Milk", quantity: 5, completed: true },
-    { id: 4, name: "Eggs", quantity: 12, completed: false },
-  ]);
+  // const [items, setItems] = useState<Item[]>([
+  //   { id: 1, name: "Apples", quantity: 3, completed: false },
+  //   { id: 2, name: "Bread", quantity: 2, completed: false },
+  //   { id: 3, name: "Milk", quantity: 5, completed: true },
+  //   { id: 4, name: "Eggs", quantity: 12, completed: false },
+  // ]);
 
   const handleToggle = (id: number) => {
     setItems((items) =>
@@ -29,7 +29,7 @@ const ShoppingList: React.FC = () => {
 
   const handleDelete = (id: number) => {
     setItems((items) => items.filter((item) => item.id !== id));
-  }
+  };
 
   const handleAddItem = (name: string, quantity: number) => {
     setItems((items) => [
@@ -45,14 +45,20 @@ const ShoppingList: React.FC = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center font-bold border-b pb-2 mb-2">
+      <div className="flex justify-between items-center font-bold border-b border-gray-200 pb-2 mb-2">
         <span className="flex-grow text-left">Item</span>
         <span className="w-20 text-center">Completed</span>
         <span className="w-20 text-center">Delete</span>
       </div>
       {items.map((item) => (
-        <ListItem key={item.id} item={item} onToggle={handleToggle} onDelete={handleDelete} />
+        <ListItem
+          key={item.id}
+          item={item}
+          onToggle={handleToggle}
+          onDelete={handleDelete}
+        />
       ))}
+      {items.length > 0 && <hr className="border-gray-200 mt-2 mb-2" />}
       <AddItemForm onAddItem={handleAddItem} />
     </div>
   );
