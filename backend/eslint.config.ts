@@ -1,15 +1,17 @@
+import tsParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
+
 export default [
   {
-    files: ['**/*.ts'],
+    files: ["**/*.ts"],
     languageOptions: {
-      parser: '@typescript-eslint/parser',
+      parser: tsParser,
     },
     plugins: {
-      '@typescript-eslint': require('@typescript-eslint/eslint-plugin'),
+      "@typescript-eslint": tsPlugin,
     },
     rules: {
-      // Add your rules here
-      '@typescript-eslint/no-unused-vars': 'warn',
+      "@typescript-eslint/no-unused-vars": "warn",
     },
   },
 ];
