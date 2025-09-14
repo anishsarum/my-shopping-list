@@ -12,11 +12,7 @@ function App() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <main className="max-w-xl p-6 bg-white rounded shadow">
-        {isLoggedIn ? (
-          <ShoppingList />
-        ) : (
-          <LoginForm onLogin={handleLogin} />
-        )}
+        {isLoggedIn ? <ShoppingList /> : <LoginForm onLogin={handleLogin} />}
       </main>
     </div>
   );

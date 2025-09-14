@@ -15,8 +15,8 @@ const ShoppingList: React.FC = () => {
   const handleToggle = (id: number) => {
     setItems((items) =>
       items.map((item) =>
-        item.id === id ? { ...item, completed: !item.completed } : item
-      )
+        item.id === id ? { ...item, completed: !item.completed } : item,
+      ),
     );
   };
 
