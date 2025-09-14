@@ -18,6 +18,7 @@
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "eslint": "^9.35.0",
     "husky": "^9.1.7",
     "jiti": "^2.5.1",
@@ -31,7 +32,8 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "lint-staged": {
     "*.{js,ts}": [

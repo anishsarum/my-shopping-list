@@ -1,3 +1,4 @@
 #!/bin/sh
-# Build all services (for now, just frontend)
+# Build all services
 (cd frontend && npm install)
+(cd backend && npm install && npx prisma generate)

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 interface LoginFormProps {
-  onLogin: () => void;
+  onLogin: (token: string) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
@@ -9,13 +9,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === "user" && password === "password") {
-      setError("");
-      onLogin();
-    } else {
-      setError("Invalid username or password");
+    setError("");
+    try {
+      const res = await fetch(`${API_URL}/signin`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: username, password }),
+      });
+      const data = await res.json();
+      localStorage.setItem("token", data.token);
+      
+      onLogin(data.token);
+    } catch (error) {
+      console.error(error);
+      setError("Network error");
     }
   };
 

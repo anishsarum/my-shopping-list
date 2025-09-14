@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ListItem from "./ListItem";
 import AddItemForm from "./AddItemForm";
 
@@ -9,31 +9,94 @@ interface Item {
   completed: boolean;
 }
 
-const ShoppingList: React.FC = () => {
+interface ShoppingListProps {
+  token: string;
+}
+
+const ShoppingList: React.FC<ShoppingListProps> = ({ token }) => {
   const [items, setItems] = useState<Item[]>([]);
 
-  const handleToggle = (id: number) => {
-    setItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, completed: !item.completed } : item,
-      ),
-    );
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const res = await fetch(`${API_URL}/items`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        setItems(data);
+      } catch (error) {
+        console.error("Failed to fetch items", error);
+      }
+    };
+    fetchItems();
+  }, [API_URL, token]);
+
+  const handleToggle = async (id: number) => {
+    try {
+      const item = items.find((i) => i.id === id);
+      if (!item) return;
+      const res = await fetch(`${API_URL}/items/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: item.name,
+          quantity: item.quantity,
+          completed: !item.completed,
+        }),
+      });
+      if (res.ok) {
+        const updatedItem = await res.json();
+        setItems((items) =>
+          items.map((item) =>
+            item.id === id ? updatedItem : item
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Failed to update item", error);
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setItems((items) => items.filter((item) => item.id !== id));
+  const handleDelete = async (id: number) => {
+    try {
+      const res = await fetch(`${API_URL}/items/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.ok) {
+        setItems((items) => items.filter((item) => item.id !== id));
+      }
+    } catch (error) {
+      console.error("Failed to delete item", error);
+    }
   };
 
-  const handleAddItem = (name: string, quantity: number) => {
-    setItems((items) => [
-      ...items,
-      {
-        id: items.length ? Math.max(...items.map((i) => i.id)) + 1 : 1,
-        name,
-        quantity,
-        completed: false,
-      },
-    ]);
+  const handleAddItem = async (name: string, quantity: number) => {
+    try {
+      const res = await fetch(`${API_URL}/items`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ name, quantity, completed: false }),
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setItems((items) => [...items, newItem]);
+      }
+    } catch (error) {
+      console.error("Failed to add item", error);
+    }
   };
 
   return (

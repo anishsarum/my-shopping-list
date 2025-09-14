@@ -10,6 +10,19 @@ services:
       - "5173:5173"
     environment:
       - HOST=0.0.0.0
+  backend:
+    container_name: my-shopping-list-backend
+    build: ./backend
+    command: npm run dev
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - postgres
   postgres:
     image: postgres:latest
     restart: always
