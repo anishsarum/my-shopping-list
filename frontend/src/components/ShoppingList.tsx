@@ -12,13 +12,6 @@ interface Item {
 const ShoppingList: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
 
-  // const [items, setItems] = useState<Item[]>([
-  //   { id: 1, name: "Apples", quantity: 3, completed: false },
-  //   { id: 2, name: "Bread", quantity: 2, completed: false },
-  //   { id: 3, name: "Milk", quantity: 5, completed: true },
-  //   { id: 4, name: "Eggs", quantity: 12, completed: false },
-  // ]);
-
   const handleToggle = (id: number) => {
     setItems((items) =>
       items.map((item) =>
@@ -58,7 +51,7 @@ const ShoppingList: React.FC = () => {
           onDelete={handleDelete}
         />
       ))}
-      {items.length > 0 && <hr className="border-gray-200 mt-2 mb-2" />}
+      {items.length > 0 && <hr className="border-gray-200 mt-2 mb-5" />}
       <AddItemForm onAddItem={handleAddItem} />
     </div>
   );
