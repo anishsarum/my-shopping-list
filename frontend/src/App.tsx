@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LoginForm from "./components/LoginForm";
+import LoginForm from "./components/AuthForm";
 import ShoppingList from "./components/ShoppingList";
 
 function App() {
