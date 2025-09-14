@@ -25,7 +25,7 @@ export const signup = async (req: Request, res: Response) => {
     if (error.code === "P2002") {
       return res.status(409).json({ message: "Email already in use" });
     }
-    console.error(error);
+    console.error("Signup error:", error);
     res.status(500).json({ message: "Signup failed" });
   }
 };
@@ -49,7 +49,7 @@ export const signin = async (req: Request, res: Response) => {
     const token = jwt.sign({ email: user.email, id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ user, token });
   } catch (error) {
-    console.error(error);
+    console.error("Signin error:", error);
     res.status(500).json({ message: "Signin failed" });
   }
 };

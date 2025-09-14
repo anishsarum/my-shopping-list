@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-interface LoginFormProps {
+interface AuthFormProps {
   onLogin: (token: string) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
+const AuthForm: React.FC<AuthFormProps> = ({ onLogin }) => {
+  const [isSignup, setIsSignup] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,7 +16,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch(`${API_URL}/signin`, {
+      const res = await fetch(`${API_URL}/${isSignup ? "signup" : "signin"}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: username, password }),
@@ -33,7 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <h1 className="text-3xl font-bold mb-2 text-center">My Shopping List</h1>
-      <h2 className="text-2xl mb-2 text-center">Login</h2>
+      <h2 className="text-2xl mb-2 text-center">{isSignup ? "Sign Up" : "Login"}</h2>
       <input
         type="text"
         placeholder="Username"
@@ -55,10 +56,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         type="submit"
         className="px-4 py-2 h-10 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
-        Login
+        {isSignup ? "Sign Up" : "Login"}
+      </button>
+      <button
+        type="button"
+        className="text-blue-500 underline mt-2"
+        onClick={() => setIsSignup((prev) => !prev)}
+      >
+        {isSignup ? "Already have an account? Login" : "No account? Sign up"}
       </button>
     </form>
   );
 };
 
-export default LoginForm;
+export default AuthForm;

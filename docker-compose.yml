@@ -14,9 +14,6 @@ services:
     container_name: my-shopping-list-backend
     build: ./backend
     command: npm run dev
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     ports:
       - "3000:3000"
     env_file:
