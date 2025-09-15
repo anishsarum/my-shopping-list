@@ -11,17 +11,16 @@ interface Item {
 
 interface ShoppingListProps {
   token: string;
+  onLogout: () => void;
 }
 
-const ShoppingList: React.FC<ShoppingListProps> = ({ token }) => {
+const ShoppingList: React.FC<ShoppingListProps> = ({ token, onLogout }) => {
   const [items, setItems] = useState<Item[]>([]);
-
-  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await fetch(`${API_URL}/items`, {
+        const res = await fetch(`/api/v1/items`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -33,13 +32,13 @@ const ShoppingList: React.FC<ShoppingListProps> = ({ token }) => {
       }
     };
     fetchItems();
-  }, [API_URL, token]);
+  }, [token]);
 
   const handleToggle = async (id: number) => {
     try {
       const item = items.find((i) => i.id === id);
       if (!item) return;
-      const res = await fetch(`${API_URL}/items/${id}`, {
+      const res = await fetch(`/api/v1/items/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +65,7 @@ const ShoppingList: React.FC<ShoppingListProps> = ({ token }) => {
 
   const handleDelete = async (id: number) => {
     try {
-      const res = await fetch(`${API_URL}/items/${id}`, {
+      const res = await fetch(`/api/v1/items/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -82,7 +81,7 @@ const ShoppingList: React.FC<ShoppingListProps> = ({ token }) => {
 
   const handleAddItem = async (name: string, quantity: number) => {
     try {
-      const res = await fetch(`${API_URL}/items`, {
+      const res = await fetch(`/api/v1/items`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -116,6 +115,10 @@ const ShoppingList: React.FC<ShoppingListProps> = ({ token }) => {
       ))}
       {items.length > 0 && <hr className="border-gray-200 mt-2 mb-5" />}
       <AddItemForm onAddItem={handleAddItem} />
+      <hr className="border-gray-200 mt-5 mb-5" />
+      <div className="flex justify-center">
+        <button onClick={onLogout} className="p-2 bg-red-500 text-white rounded">Logout</button>
+      </div>
     </div>
   );
 };

@@ -8,8 +8,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use("/auth", authRouter);
-app.use("/items", itemsRouter);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/items", itemsRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server ready at http://localhost:${PORT}`);

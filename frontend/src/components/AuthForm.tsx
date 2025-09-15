@@ -10,20 +10,21 @@ const AuthForm: React.FC<AuthFormProps> = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const API_URL = import.meta.env.VITE_API_URL;
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch(`${API_URL}/${isSignup ? "signup" : "signin"}`, {
+      const res = await fetch(`/api/v1/auth/${isSignup ? "signup" : "signin"}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: username, password }),
       });
       const data = await res.json();
+      if (!res.ok) {
+        setError(data.message || "Login failed");
+        return;
+      }
       localStorage.setItem("token", data.token);
-      
       onLogin(data.token);
     } catch (error) {
       console.error(error);
